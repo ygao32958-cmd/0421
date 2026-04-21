@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星際望遠鏡探險</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* 防止滾動條 */
+            background-color: #000;
+        }
+        canvas {
+            display: block; /* 移除 canvas 下方的空白 */
+        }
+
+        /* 彈出視窗樣式 */
+        #star-popup-overlay {
+            display: none; /* 預設隱藏 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* 半透明黑色背景 */
+            z-index: 200; /* 確保在望遠鏡之上 */
+            justify-content: center;
+            align-items: center;
+        }
+
+        #star-popup {
+            background-color: #1a1a2e; /* 深藍色背景 */
+            border: 2px solid #4CAF50; /* 綠色邊框 */
+            border-radius: 10px;
+            padding: 20px;
+            color: #e0e0e0;
+            text-align: center;
+            width: 85vw; /* 增加寬度以顯示內容 */
+            height: 80vh; /* 增加高度以顯示內容 */
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5); /* 綠色光暈 */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #star-popup h2 {
+            color: #4CAF50; /* 綠色標題 */
+            margin-top: 0;
+            font-size: 1.5em;
+            text-shadow: 0 0 5px rgba(76, 175, 80, 0.7);
+            margin-bottom: 10px;
+        }
+
+        #star-popup p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        /* 內嵌框架樣式 */
+        #popup-iframe {
+            width: 100%;
+            flex-grow: 1;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        #popup-back-button {
+            background-color: #4CAF50; /* 綠色按鈕 */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        #popup-back-button:hover {
+            background-color: #45a049;
+        }
+
+        /* 操作說明樣式 */
+        #instructions {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(26, 26, 46, 0.8);
+            color: #4CAF50;
+            padding: 15px;
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.9em;
+            pointer-events: none; /* 讓滑鼠點擊穿透，不干擾望遠鏡 */
+            z-index: 150;
+            line-height: 1.6;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div id="instructions">
+        <strong>🔭 觀星操作說明</strong><br>
+        • 移動滑鼠：移動望遠鏡視野<br>
+        • <b>長按右鍵</b>：放大觀察目標<br>
+        • <b>左鍵點擊</b>：查看星星詳細資訊
+    </div>
+
+    <!-- 星星資訊彈出視窗 -->
+    <div id="star-popup-overlay">
+        <div id="star-popup">
+            <h2 id="popup-star-name"></h2>
+            <iframe id="popup-iframe" src=""></iframe>
+            <button id="popup-back-button">返回</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="sketch.js"></script>
+    <style>
+        /* 微弱的環境噪點效果，增加底層質感 */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+    </style>
+</body>
+</html>
